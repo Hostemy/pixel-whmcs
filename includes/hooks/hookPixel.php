@@ -1,21 +1,21 @@
 <?php
 if (!defined("WHMCS"))
-	die("This file cannot be accessed directly");
+    die("This file cannot be accessed directly");
 
 function facebookPixel()
 {
-	$modulevars = array();
-	$result = select_query("tbladdonmodules", "", array("module" => "facebookPixel"));
+    $modulevars = array();
+    $result = select_query("tbladdonmodules", "", array("module" => "managePixel"));
 
-	while ($data = mysql_fetch_array($result)) {
-		$modulevars[$data["setting"]] = $data["value"];
-	}
+    while ($data = mysql_fetch_array($result)) {
+        $modulevars[$data["setting"]] = $data["value"];
+    }
 
-	$active = $modulevars['active'];
-	$pixelID = $modulevars['pixelid'];
+    $active = $modulevars['active_facebook'];
+    $pixelID = $modulevars['pixel_facebook'];
 
-	if ($active) {
-		$pixelcode = "
+    if ($active) {
+        $pixelcode = "
 <!-- Facebook Pixel Code -->
 <script>
 	!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
@@ -31,27 +31,27 @@ function facebookPixel()
 	src=\"https://www.facebook.com/tr?id=" . $pixelID . "&ev=PageView&noscript=1\" />
 </noscript>
 <!-- End Facebook Pixel Code -->";
-	} else {
-		$pixelcode = "";
-	}
+    } else {
+        $pixelcode = "";
+    }
 
-	return "$pixelcode";
+    return "$pixelcode";
 }
 
 function twitterPixel()
 {
-	$modulevars = array();
-	$result = select_query("tbladdonmodules", "", array("module" => "twitterPixel"));
+    $modulevars = array();
+    $result = select_query("tbladdonmodules", "", array("module" => "managePixel"));
 
-	while ($data = mysql_fetch_array($result)) {
-		$modulevars[$data["setting"]] = $data["value"];
-	}
+    while ($data = mysql_fetch_array($result)) {
+        $modulevars[$data["setting"]] = $data["value"];
+    }
 
-	$active = $modulevars['active'];
-	$pixelID = $modulevars['pixelid'];
+    $active = $modulevars['active_twitter'];
+    $pixelID = $modulevars['pixel_twiiter'];
 
-	if ($active) {
-		$pixelcode = "
+    if ($active) {
+        $pixelcode = "
 <!-- Twitter universal website tag code -->
 <script>
 	!function(e,t,n,s,u,a){e.twq||(s=e.twq=function(){s.exe?s.exe.apply(s,arguments):s.queue.push(arguments);
@@ -62,11 +62,11 @@ function twitterPixel()
 	twq('track','PageView');
 </script>
 <!-- End Twitter universal website tag code -->";
-	} else {
-		$pixelcode = "";
-	}
+    } else {
+        $pixelcode = "";
+    }
 
-	return "$pixelcode";
+    return "$pixelcode";
 }
 
 add_hook("ClientAreaHeadOutput", 10, "facebookPixel");
